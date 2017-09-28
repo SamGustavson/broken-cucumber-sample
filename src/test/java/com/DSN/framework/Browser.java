@@ -1,15 +1,16 @@
 package com.DSN.framework;
 
 import com.paulhammant.ngwebdriver.NgWebDriver;
-import org.apache.xpath.operations.String;
+
 import org.openqa.selenium.*;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
+//import org.apache.xpath.operations.String;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -22,23 +23,23 @@ public class Browser {
 
 //====================================================================================================
     private static ThreadLocal<String>          logInURL    = new ThreadLocal<>();
-    private static ThreadLocal<Global.eLoginDT> logInUSER   = new ThreadLocal<>();
-    public static void              setUSER (Global.eLoginDT sUSER){
-        Log.info("USER set to: "+sUSER.name());
-        logInUSER.set(sUSER);
-    }
-    public static Global.eLoginDT   getUSER (){
-        Global.eLoginDT ee = logInUSER.get();
-        if (logInUSER.get()==null){
-            logInUSER.set(Global.DEF_USER);
-        }
-        return logInUSER.get();
-    }
+//    private static ThreadLocal<Global.eLoginDT> logInUSER   = new ThreadLocal<>();
+//    public static void              setUSER (Global.eLoginDT sUSER){
+//        Log.info("USER set to: "+sUSER.name());
+//        logInUSER.set(sUSER);
+//    }
+//    public static Global.eLoginDT   getUSER (){
+//        Global.eLoginDT ee = logInUSER.get();
+//        if (logInUSER.get()==null){
+//            logInUSER.set(Global.DEF_USER);
+//        }
+//        return logInUSER.get();
+//    }
     public static void setURL (String sURL){
         logInURL.set(sURL);
     }
     public static String getURL (){
-        if (logInURL.get()!=null){ logInURL.set(Global.DEF_URL); }
+        if (logInURL.get()==null){ logInURL.set(Global.DEF_URL); }
         return logInURL.get();
     }
     //=================================================================================================
@@ -56,19 +57,22 @@ public class Browser {
         return ngWebDriver.get();
     }
 
-    private static void init() {
-//        ChromeDriverManager.getInstance().forceCache().setup();// ChromeDriverManager.getInstance().version("2.24").arch64().setup();//TODO
-        ChromeDriverManager.getInstance().setup("2.25");
+    private static void init()  {
+//      ChromeDriverManager.getInstance().forceCache().setup();
+     //   ChromeDriverManager.getInstance().version("2.8").arch64().setup();//TODO
+        ChromeDriverManager.getInstance().setup("2.27");
+       // System.setProperty("webdriver.chrome.driver", "D:\\chromedriver.exe");
         //=================================================================
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized");//get().manage().window().maximize();
-        Map<String, Object> prefs = new HashMap<String, Object>();
+        Map<java.lang.String, Object> prefs = new HashMap<>();
         prefs.put("credentials_enable_service", false);
         prefs.put("profile.password_manager_enabled", false);
         options.setExperimentalOption("prefs", prefs);
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-        driver.set(new FirefoxDriver(capabilities));//driver.set(new ChromeDriver());
+//        driver.set(new FirefoxDriver(capabilities));
+        driver.set(new ChromeDriver(capabilities));
         //=================================================================
         get().manage().timeouts().pageLoadTimeout(Global.DEF_PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
         get().manage().timeouts().setScriptTimeout(Global.DEF_SCRIPT_TIMEOUT, TimeUnit.SECONDS);
@@ -152,7 +156,7 @@ public class Browser {
         waitForAngular();
         boolean bThrowErrorLocal = (bThrowError.length > 0)?bThrowErrorLocal = bThrowError[0]:true;
         try{
-            String sMsgTxtActual	= "";
+            String sMsgTxtActual	= "Get $15 off, and receive the latest recipes by subscribing now!";
             String sXPath_FlashMsg	= "???";
             try{
                 sMsgTxtActual = (new WebDriverWait(get(), 3)).
@@ -218,4 +222,6 @@ public class Browser {
     public static boolean hasElement(By by) {
         return !get().findElements(by).isEmpty();
     }
+
+
 }
