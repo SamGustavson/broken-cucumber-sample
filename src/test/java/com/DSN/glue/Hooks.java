@@ -6,15 +6,16 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.testng.annotations.AfterMethod;
+
 
 public class Hooks {
     @Before
     public void beforeScenario() {
         Browser.get().get("http://weirdpage.com");
+        Browser.refresh(true);
     }
 
-    @AfterMethod(order = 2)
+    @After(order = 2)
     public void afterScenario() {
         Browser.close();
     }

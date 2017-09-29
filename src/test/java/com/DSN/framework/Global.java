@@ -1,8 +1,11 @@
 package com.DSN.framework;
 
+
+import java.lang.String;
+
 public class Global {
-    public static final String URL_PRJ_DEV      = "https://www.google.com.ua/";
-    public static final String URL_PRJ_STAGE    = "https://www.google.com.ua/";
+    private static final String URL_PRJ_DEV      = "https://www.google.com.ua/";
+    public static final String URL_PRJ_STAGE    = "https://www.hellofresh.com/";
     public static final String URL_PRJ_PROD     = "https://www.google.com.ua/";
     //===
     public static final int DEF_IMPLICITY_WAIT_SEC              = 3;
@@ -16,6 +19,7 @@ public class Global {
 
     public static final String      DEF_URL     = URL_PRJ_DEV;
     public static final eLoginDT    DEF_USER    = eLoginDT.admin;
+
 
     // LOGIN CREDs
     public enum eLoginDT {
@@ -52,6 +56,14 @@ public class Global {
             }
             return eLoginDT.admin;
         }
+        public static eLoginDT findByPass(String sPass){
+            for(eLoginDT v : values()){
+                if( v.pass().equals(sPass)){
+                    return v;
+                }
+            }
+            return eLoginDT.editor;
+        }
 
         public static eLoginDT findByRole(String sRole){
             for(eLoginDT v : values()){
@@ -59,8 +71,9 @@ public class Global {
                     return v;
                 }
             }
-            return eLoginDT.admin;
+            return eLoginDT.viewer;
         }
+
     }
     // Logs and reports
     public static String logFolderPath;

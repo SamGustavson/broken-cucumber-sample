@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 //import org.apache.xpath.operations.String;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -23,25 +24,28 @@ public class Browser {
 
 //====================================================================================================
     private static ThreadLocal<String>          logInURL    = new ThreadLocal<>();
-//    private static ThreadLocal<Global.eLoginDT> logInUSER   = new ThreadLocal<>();
-//    public static void              setUSER (Global.eLoginDT sUSER){
-//        Log.info("USER set to: "+sUSER.name());
-//        logInUSER.set(sUSER);
-//    }
-//    public static Global.eLoginDT   getUSER (){
-//        Global.eLoginDT ee = logInUSER.get();
-//        if (logInUSER.get()==null){
-//            logInUSER.set(Global.DEF_USER);
-//        }
-//        return logInUSER.get();
-//    }
+    private static ThreadLocal<Global.eLoginDT> logInUSER   = new ThreadLocal<>();
+    public static void              setUSER (Global.eLoginDT sUSER){
+        Log.info("USER set to: "+sUSER.name());
+        logInUSER.set(sUSER);
+    }
+    public static Global.eLoginDT   getUSER(Global.eLoginDT[] user){
+        Global.eLoginDT ee = logInUSER.get();
+        if (logInUSER.get()==null){
+            logInUSER.set(Global.DEF_USER);
+        }
+        return logInUSER.get();
+    }
     public static void setURL (String sURL){
         logInURL.set(sURL);
     }
     public static String getURL (){
         if (logInURL.get()==null){ logInURL.set(Global.DEF_URL); }
         return logInURL.get();
+
     }
+
+
     //=================================================================================================
     private static ThreadLocal<RemoteWebDriver> driver = new ThreadLocal<>();
     private static ThreadLocal<NgWebDriver> ngWebDriver = new ThreadLocal<>();
@@ -59,17 +63,18 @@ public class Browser {
 
     private static void init()  {
 //      ChromeDriverManager.getInstance().forceCache().setup();
-     //   ChromeDriverManager.getInstance().version("2.8").arch64().setup();//TODO
-        ChromeDriverManager.getInstance().setup("2.27");
-       // System.setProperty("webdriver.chrome.driver", "D:\\chromedriver.exe");
+//      ChromeDriverManager.getInstance().version("2.24").arch64().setup();//TODO
+        ChromeDriverManager.getInstance().version("2.24").setup(); //version 2.24 is deprecated . Better use 2.31
+        //System.setProperty("webdriver.chrome.driver", "D:\\chromedriver.exe");
         //=================================================================
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized");//get().manage().window().maximize();
-        Map<java.lang.String, Object> prefs = new HashMap<>();
+        Map<String, Object> prefs = new HashMap<>();
         prefs.put("credentials_enable_service", false);
         prefs.put("profile.password_manager_enabled", false);
         options.setExperimentalOption("prefs", prefs);
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+        capabilities.setCapability(CapabilityType.ForSeleniumServer.ENSURING_CLEAN_SESSION,true);
         capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 //        driver.set(new FirefoxDriver(capabilities));
         driver.set(new ChromeDriver(capabilities));

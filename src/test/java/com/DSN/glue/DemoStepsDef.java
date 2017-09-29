@@ -1,10 +1,11 @@
 package com.DSN.glue;
 
+import com.DSN.framework.Global;
 import com.DSN.pageObjects.GooglePage;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.apache.xpath.operations.String;
+
 import org.testng.Assert;
 
 public class DemoStepsDef {
@@ -12,7 +13,7 @@ public class DemoStepsDef {
     @Given("^I am navigated to main page$")
     public void navigatedToMainPage() throws Throwable {
         GooglePage gPage = new GooglePage();
-        gPage.navigateToHomePage();
+        gPage.navigateToHomePage(Global.eLoginDT.admin);
     }
 
     @When("^I am searching for a string pattern (.*)")

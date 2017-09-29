@@ -12,10 +12,13 @@ public class HelloFreshPage extends BasePage {
             case "Our plans":
                 Browser.get().findElement(HelloFreshLocators.PLANS_LOCATOR.getLocator()).click();
                 break;
-            case "Log in":
-                Browser.get().findElement(HelloFreshLocators.LOGIN_BUTTON_LOCATOR.getLocator()).click();
-                break;
             case "Login":
+                if (Browser.get().getCurrentUrl().equals("https://www.hellofresh.com/")){
+                    Browser.get().findElement(HelloFreshLocators.LOGIN_BUTTON_LOCATOR_2.getLocator()).click();
+                }
+                 else Browser.get().findElement(HelloFreshLocators.LOGIN_BUTTON_LOCATOR.getLocator()).click();
+                break;
+            case "Log in":
                 Browser.get().findElement(HelloFreshLocators.SUBMIT_BUTTON_LOCATOR.getLocator()).click();
                 break;
         }

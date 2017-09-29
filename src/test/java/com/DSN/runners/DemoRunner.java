@@ -14,7 +14,7 @@ public class DemoRunner extends AbstractTestNGCucumberTests {
     @BeforeClass
     public static void setUp() {
         Browser.setURL(Global.DEF_URL);
-        Browser.setUSER(Global.eLoginDT.admin);
+       // Browser.setUSER(Global.eLoginDT.admin);
     }
 
     @AfterClass

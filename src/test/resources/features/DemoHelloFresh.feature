@@ -5,10 +5,10 @@ Feature: Basic feature for HelloFreshDemo
     Given I go to the main page "www.hellofresh.com"
 
   Scenario: Log in
-    When I click "Log in"
+    When I click "Login"
     And I Enter email = "email@mail.com"
     And I Enter password = "132456"
-    And I click "Login" to submit
+    And I click "Log in"
     Then I should see message "Incorrect username or password."
 
   Scenario: Click plans
