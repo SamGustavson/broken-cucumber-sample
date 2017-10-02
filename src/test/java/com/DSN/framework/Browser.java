@@ -10,9 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-//import org.apache.xpath.operations.String;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -30,7 +28,7 @@ public class Browser {
         logInUSER.set(sUSER);
     }
     public static Global.eLoginDT   getUSER(Global.eLoginDT[] user){
-        Global.eLoginDT ee = logInUSER.get();
+        Global.eLoginDT ee  = logInUSER.get();
         if (logInUSER.get()==null){
             logInUSER.set(Global.DEF_USER);
         }
@@ -161,7 +159,7 @@ public class Browser {
         waitForAngular();
         boolean bThrowErrorLocal = (bThrowError.length > 0)?bThrowErrorLocal = bThrowError[0]:true;
         try{
-            String sMsgTxtActual	= "Get $15 off, and receive the latest recipes by subscribing now!";
+            String sMsgTxtActual	= "";
             String sXPath_FlashMsg	= "???";
             try{
                 sMsgTxtActual = (new WebDriverWait(get(), 3)).
